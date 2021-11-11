@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default (props) => (
-  <form>
+  <form onSubmit={props.SubmitTodo}>
     <input
       onChange={props.handleTodo}
       value={props.currentValue}

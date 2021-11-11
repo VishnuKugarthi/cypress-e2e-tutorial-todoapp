@@ -1,41 +1,76 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import Footer from './Footer';
+import SaveTodo from '../lib/service';
 
-export default class TodoApp extends Component {
-  constructor(props) {
-    super(props);
+function TodoApp() {
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      todos: [],
-      currentValue: '',
+  //   this.state = {
+  //     todos: [],
+  //     currentValue: '',
+  //   };
+
+  //   this.handleTodo = this.handleTodo.bind(this);
+  // }
+  // handleTodo(e) {
+  //   this.setState({ currentValue: e.target.value });
+  // }
+
+  // render() {
+
+  const [todos, setTodos] = useState([]);
+  const [currentValue, setCurrentValue] = useState('');
+
+  function handleTodo(e) {
+    setCurrentValue(e.target.value);
+  }
+
+  function SubmitTodo(e) {
+    e.preventDefault();
+
+    let i = 1;
+
+    const newTodo = {
+      name: currentValue,
+      isCompleted: false,
+      id: i,
     };
 
-    this.handleTodo = this.handleTodo.bind(this);
-  }
-  handleTodo(e) {
-    this.setState({ currentValue: e.target.value });
+    // let response = SaveTodo(newTodo);
+
+    // console.log('response === ', response.body);
+    // setTodos(response.data);
+
+    SaveTodo(newTodo).then(({ data }) => {
+      console.log('data === ', data);
+      const item = [];
+      item.push(data);
+      setTodos(item);
+    });
   }
 
-  render() {
-    return (
-      <Router>
-        <div>
-          <header className='header'>
-            <h1>todos</h1>
-            <TodoForm
-              currentValue={this.state.currentValue}
-              handleTodo={this.handleTodo}
-            />
-          </header>
-          <section className='main'>
-            <TodoList todos={this.state.todos} />
-          </section>
-          <Footer />
-        </div>
-      </Router>
-    );
-  }
+  return (
+    <Router>
+      <div>
+        <header className='header'>
+          <h1>todos</h1>
+          <TodoForm
+            currentValue={currentValue}
+            handleTodo={handleTodo}
+            SubmitTodo={SubmitTodo}
+          />
+        </header>
+        <section className='main'>
+          <TodoList todos={todos} />
+        </section>
+        <Footer />
+      </div>
+    </Router>
+  );
+  // }
 }
+export default TodoApp;
