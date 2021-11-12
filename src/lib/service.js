@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const SaveTodo = (todoItem) =>
+export const SaveTodo = (todoItem) =>
   axios.post('http://localhost:3030/api/todos', todoItem);
 
-export default SaveTodo;
+export const ListOfTodos = () => axios.get('http://localhost:3030/api/todos');

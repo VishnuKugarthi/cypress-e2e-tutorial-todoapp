@@ -1,9 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import Footer from './Footer';
-import SaveTodo from '../lib/service';
+import { SaveTodo, ListOfTodos } from '../lib/service';
 
 function TodoApp() {
   // constructor(props) {
@@ -29,6 +29,13 @@ function TodoApp() {
   function handleTodo(e) {
     setCurrentValue(e.target.value);
   }
+
+  useEffect(() => {
+    ListOfTodos().then(({ data }) =>
+      // console.log('data from ListOfTodos = ', data)
+      setTodos(data)
+    );
+  }, []);
 
   function SubmitTodo(e) {
     e.preventDefault();
