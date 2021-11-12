@@ -2,7 +2,8 @@
 
 describe('The application loads', () => {
   beforeEach(() => {
-    cy.visit('/');
+    // cy.visit('/');
+    cy.initialLoadAndWrite([]);
   });
   it('navigates to the / route', () => {});
 

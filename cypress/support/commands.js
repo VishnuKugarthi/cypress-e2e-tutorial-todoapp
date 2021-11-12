@@ -23,3 +23,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('initialLoadAndWrite', (data = 'fixture:listOfTodos') => {
+  console.log('Cypress.Commands data --------- ', data);
+  cy.server();
+  cy.route('GET', '/api/todos', data);
+  cy.visit('/');
+});

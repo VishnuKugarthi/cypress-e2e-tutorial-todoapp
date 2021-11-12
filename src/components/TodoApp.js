@@ -31,10 +31,14 @@ function TodoApp() {
   }
 
   useEffect(() => {
-    ListOfTodos().then(({ data }) =>
-      // console.log('data from ListOfTodos = ', data)
-      setTodos(data)
-    );
+    ListOfTodos()
+      .then(({ data }) => {
+        // console.log('data from ListOfTodos = ', data)
+        setTodos(data);
+      })
+      .catch(() => {
+        setShowError(true);
+      });
   }, []);
 
   function SubmitTodo(e) {
@@ -72,7 +76,7 @@ function TodoApp() {
         <header className='header'>
           <h1>todos</h1>
           <div>
-            <span className='error'>Something went wrong.</span>
+            {showError && <span className='error'>Something went wrong.</span>}
           </div>
           <TodoForm
             currentValue={currentValue}
