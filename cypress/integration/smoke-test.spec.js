@@ -19,9 +19,11 @@ describe('The application loads', () => {
   });
 
   describe('add a todo to the list', () => {
+    beforeEach(() => {
+      cy.server();
+    });
     it('add a item', () => {
       let i = 1;
-      cy.server();
       cy.route('POST', '/api/todos', {
         name: 'Buy eggs',
         isCompleted: false,
@@ -35,8 +37,7 @@ describe('The application loads', () => {
       cy.get('.new-todo').should('have.value', '');
     });
 
-    it('Show error wen adding an item', () => {
-      cy.server();
+    it('Show error wen api call is failed', () => {
       cy.route({
         url: '/api/todos',
         method: 'POST',
@@ -45,6 +46,8 @@ describe('The application loads', () => {
       });
 
       cy.get('.new-todo').type('Buy milk').type('{enter}');
+
+      cy.get('.todo-list li').should('not.exist');
 
       cy.get('.error').should('have.text', 'Something went wrong.');
     });
