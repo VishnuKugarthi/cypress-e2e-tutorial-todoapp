@@ -18,8 +18,8 @@ describe('The application loads', () => {
     // cy.get('.new-todo')
   });
 
-  context('add a todo to the list', () => {
-    it.only('add a item', () => {
+  describe('add a todo to the list', () => {
+    it('add a item', () => {
       let i = 1;
       cy.server();
       cy.route('POST', '/api/todos', {
@@ -31,6 +31,22 @@ describe('The application loads', () => {
       cy.get('.new-todo').type('Buy eggs').type('{enter}');
 
       cy.get('.todo-list li').should('have.length', 1);
+
+      cy.get('.new-todo').should('have.value', '');
+    });
+
+    it('Show error wen adding an item', () => {
+      cy.server();
+      cy.route({
+        url: '/api/todos',
+        method: 'POST',
+        status: 500,
+        response: {},
+      });
+
+      cy.get('.new-todo').type('Buy milk').type('{enter}');
+
+      cy.get('.error').should('have.text', 'Something went wrong.');
     });
   });
 });

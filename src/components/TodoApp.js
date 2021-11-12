@@ -24,6 +24,7 @@ function TodoApp() {
 
   const [todos, setTodos] = useState([]);
   const [currentValue, setCurrentValue] = useState('');
+  const [showError, setShowError] = useState(false);
 
   function handleTodo(e) {
     setCurrentValue(e.target.value);
@@ -45,12 +46,17 @@ function TodoApp() {
     // console.log('response === ', response.body);
     // setTodos(response.data);
 
-    SaveTodo(newTodo).then(({ data }) => {
-      console.log('data === ', data);
-      const item = [];
-      item.push(data);
-      setTodos(item);
-    });
+    SaveTodo(newTodo)
+      .then(({ data }) => {
+        console.log('data === ', data);
+        const item = [];
+        item.push(data);
+        setTodos(item);
+        setCurrentValue('');
+      })
+      .catch((err) => {
+        setShowError(true);
+      });
   }
 
   return (
@@ -58,6 +64,9 @@ function TodoApp() {
       <div>
         <header className='header'>
           <h1>todos</h1>
+          <div>
+            <span className='error'>Something went wrong.</span>
+          </div>
           <TodoForm
             currentValue={currentValue}
             handleTodo={handleTodo}
