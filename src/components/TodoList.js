@@ -5,10 +5,15 @@ const TodoItem = (props) => {
   //   console.log('props22 ---- ', props);
   // }
   return (
-    <li>
+    <li className={props.isComplete ? 'completed' : null}>
       <div className='view'>
-        <input className='toggle' type='checkbox' />
-        <label>{props.name} </label>
+        <input
+          className='toggle'
+          type='checkbox'
+          checked={props.isComplete}
+          onChange={() => {}}
+        />
+        <label>{props.name}</label>
         <button className='destroy' />
       </div>
     </li>

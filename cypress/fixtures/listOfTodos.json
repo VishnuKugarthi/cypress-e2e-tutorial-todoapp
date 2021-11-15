@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "name": "Buy Maggie",
+    "name": "Buy Milk",
     "isComplete": false
   },
   {
     "id": 2,
-    "name": "Buy Atta",
-    "isComplete": false
+    "name": "Buy Eggs",
+    "isComplete": true
   },
   {
     "id": 3,

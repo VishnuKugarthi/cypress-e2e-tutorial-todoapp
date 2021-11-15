@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import Footer from './Footer';
-import { SaveTodo, ListOfTodos } from '../lib/service';
+import { SaveTodo, ListOfTodos, DeleteTodo } from '../lib/service';
 
 function TodoApp() {
   // constructor(props) {
@@ -69,6 +69,10 @@ function TodoApp() {
         setShowError(true);
       });
   }
+
+  // function DeleteTodo(id) {
+  //   DeleteTodo(id).then(() => {})
+  // }
 
   return (
     <Router>
