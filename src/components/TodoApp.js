@@ -70,9 +70,15 @@ function TodoApp() {
       });
   }
 
-  // function DeleteTodo(id) {
-  //   DeleteTodo(id).then(() => {})
-  // }
+  function DeleteTodoFunction(id) {
+    DeleteTodo(id).then(() => {
+      console.log('delete ----- ', id);
+      setTodos(todos.filter((item) => item.id !== id));
+    });
+    //
+  }
+
+  const RemainingTodos = todos.filter((item) => !item.isComplete).length;
 
   return (
     <Router>
@@ -89,9 +95,9 @@ function TodoApp() {
           />
         </header>
         <section className='main'>
-          <TodoList todos={todos} />
+          <TodoList todos={todos} DeleteTodoFunction={DeleteTodoFunction} />
         </section>
-        <Footer />
+        <Footer RemainingTodos={RemainingTodos} />
       </div>
     </Router>
   );
